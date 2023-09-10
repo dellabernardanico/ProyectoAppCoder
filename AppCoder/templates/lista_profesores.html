@@ -1,0 +1,15 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+    
+    <ul>
+
+        
+        {% for profesor in lista_profesores %}
+            <li>{{ profesor.nombre }} - {{ profesor.apellido }}</li>
+        {% endfor %}
+            
+
+    </ul>
+
+{% endblock contenidoQueCambia %}

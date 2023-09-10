@@ -31,8 +31,15 @@ class Profesor(models.Model):
     nombre = models.CharField(max_length=40)
     apellido = models.CharField(max_length=40)
     email = models.EmailField()
-    profesion = models.CharField(max_length=50)
+    profesion = models.CharField(max_length=50, null=True, blank=True)
     cursos = models.ManyToManyField(Curso)
+    
+    class Meta():
+
+        verbose_name = 'Profesor'
+        verbose_name_plural = 'The Profesors'
+        ordering = ('nombre', 'profesion')
+        unique_together = ('nombre', 'apellido')    
 
 class Entregable(models.Model):
 
