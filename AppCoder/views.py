@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render
-from .models import Curso, Profesor
-from .forms import CursoFormulario, ProfesorFormulario
+from .models import Curso, Profesor, Estudiante
+from .forms import CursoFormulario, ProfesorFormulario, EstudianteFormulario
 
 # Create your views here.
 
@@ -97,7 +97,7 @@ def profesorFormulario(req):
 
             profesor.save()
 
-            return render(req,"profesorFormulario.html")
+            return render(req, "inicio.html")
         
     else:
         miFormulario= ProfesorFormulario()
@@ -109,3 +109,26 @@ def listar_profesores(req):
     lista = Profesor.objects.all()
 
     return render(req, "lista_profesores.html", {"lista_profesores": lista})
+
+def estudianteFormulario(req):
+
+    print('method', req.method)
+    print('POST', req.POST)
+    
+    if req.method == 'POST':
+
+        miFormulario = EstudianteFormulario(req.POST)
+
+        if miFormulario.is_valid():
+
+            data = miFormulario.cleaned_data
+            estudiante = Estudiante(nombre=data["nombre"], apellido=data["apellido"],
+            email=data["email"])
+            
+            estudiante.save()
+
+            return render(req, "inicio.html")
+    else:
+
+        miFormulario = EstudianteFormulario()
+        return render(req, "estudianteFormulario.html", {"miFormulario": miFormulario})
